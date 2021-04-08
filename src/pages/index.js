@@ -1,71 +1,68 @@
-import React from "react"
-import { css } from "@emotion/react"
-import { Link, graphql } from "gatsby"
-import { rhythm } from "../utils/typography"
-import Layout from "../components/layout"
+import React, { Component } from 'react';
+import { graphql } from 'gatsby';
+import styled from 'styled-components';
 
-export default function Home({ data }) {
-  return (
-    <Layout>
-      <div>
-        <h1
-          css={css`
-            display: inline-block;
-            border-bottom: 1px solid;
-          `}
-        >
-          Amazing Pandas Eating Things
-        </h1>
-        <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
-        {data.allMarkdownRemark.edges.map(({ node }) => (
-          <div key={node.id}>
-            <Link
-              to={node.fields.slug}
-              css={css`
-                text-decoration: none;
-                color: inherit;
-              `}
-            >
-              <h3
-                css={css`
-                  margin-bottom: ${rhythm(1 / 4)};
-                `}
-              >
-                {node.frontmatter.title}{" "}
-                <span
-                  css={css`
-                    color: #555;
-                  `}
-                >
-                  — {node.frontmatter.date}
-                </span>
-              </h3>
-              <p>{node.excerpt}</p>
-            </Link>
-          </div>
-        ))}
-      </div>
-    </Layout>
-  )
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import Bio from '../components/bio';
+import Post from '../components/post';
+import media from '../utils/media';
+
+const Title = styled.h3`
+  font-weight: 800;
+  font-size: 2.6rem;
+  margin: 6rem 0 0;
+
+  ${media.phone`
+    margin: 3rem 0 0;
+  `}
+`;
+
+class BlogIndex extends Component {
+  render() {
+    const { data } = this.props;
+    const posts = data.allMarkdownRemark.edges;
+    return (
+      <Layout>
+        <SEO title="All Posts" keywords={[`gatsby`, `blog`, `react`]} />
+        <Bio />
+        <main>
+          <Title>Latest Posts</Title>
+          {posts.map(({ node }) => {
+            return <Post key={node.id} node={node} />;
+          })}
+        </main>
+      </Layout>
+    );
+  }
 }
 
-export const query = graphql`
+export default BlogIndex;
+
+export const pageQuery = graphql`
   query {
+    site {
+      siteMetadata {
+        title
+      }
+    }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      totalCount
       edges {
         node {
           id
-          frontmatter {
-            title
-            date(formatString: "DD MMMM, YYYY")
-          }
+          excerpt(pruneLength: 160)
           fields {
             slug
+            readingTime {
+              text
+            }
           }
-          excerpt
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+          }
         }
       }
     }
   }
-`
+`;

@@ -1,4 +1,2 @@
-import "./src/styles/global.css"
-
-// or:
-// require('./src/styles/global.css')
+import 'typeface-oswald';
+import 'prismjs/themes/prism-tomorrow.css';
