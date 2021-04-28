@@ -4,7 +4,9 @@ import { StaticQuery, graphql } from 'gatsby';
 import Image from 'gatsby-image';
 
 import media from '../utils/media';
-import Twitter from '../images/social/twitter.svg';
+import Github from '../images/social/github-brands.svg';
+import Facebook from '../images/social/facebook-square-brands.svg';
+import Instagram from '../images/social/instagram-brands.svg';
 
 const Container = styled.div`
   display: flex;
@@ -48,10 +50,25 @@ const TagLine = styled.sub`
   display: block;
 `;
 
-const TwitterIcon = styled.img`
+const GithubIcon = styled.img`
   height: 1.5rem;
   width: 1.5rem;
   padding: 1.5rem 1rem;
+`;
+
+const FacebookIcon = styled.img`
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 1.5rem 1rem;
+`;
+
+const InstagramIcon = styled.img`
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 1.5rem 1rem;
+`;
+const Links = styled.a`
+  margin: 0.7%;
 `;
 
 const Bio = () => (
@@ -60,22 +77,43 @@ const Bio = () => (
     render={(data) => {
       const { author, authorTagline, social } = data.site.siteMetadata;
       return (
-        <Container>
-          <TextContainer>
-            <Name>{author}</Name>
-            <TagLine>{authorTagline}</TagLine>
-            <a
-              href={`https://twitter.com/${social.twitter}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <TwitterIcon src={Twitter} alt="twitter" />
-            </a>
-          </TextContainer>
-          <ImageContainer>
-            <Image fixed={data.avatar.childImageSharp.fixed} alt={author} />
-          </ImageContainer>
-        </Container>
+        <>
+          <Container>
+            <TextContainer>
+              <Name>{author}</Name>
+              <TagLine>{authorTagline}</TagLine>
+              <a
+                href={`https://www.github.com/${social.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GithubIcon src={Github} alt="github" />
+              </a>
+              <a
+                href={`https://www.facebook.com/${social.facebook}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FacebookIcon src={Facebook} alt="facebook" />
+              </a>
+              <a
+                href={`https://www.instagram.com/${social.instagram}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <InstagramIcon src={Instagram} alt="instagram" />
+              </a>
+            </TextContainer>
+            <ImageContainer>
+              <Image fixed={data.avatar.childImageSharp.fixed} alt={author} />
+            </ImageContainer>
+          </Container>
+          <div>
+            <Links href="/about">About</Links>
+            <Links href="/toys">Toys</Links>
+            <Links href="/projects">Projets</Links>
+          </div>
+        </>
       );
     }}
   />
@@ -95,7 +133,9 @@ const bioQuery = graphql`
         author
         authorTagline
         social {
-          twitter
+          github
+          facebook
+          instagram
         }
       }
     }

@@ -1,11 +1,13 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Blog Starter`,
-    description: `A Blog starter`,
-    author: `Boy with Silver Wings`,
+    title: `henryhansollee`,
+    description: `henryhansollee`,
+    author: `이한솔(Hansol LEE)`,
     authorTagline: 'Engineer. Driven by Passion',
     social: {
-      twitter: `agneymenon`,
+      github: `henryhansollee`,
+      facebook: `henryhansollee`,
+      instagram: `henryhansollee`,
     },
   },
   plugins: [
